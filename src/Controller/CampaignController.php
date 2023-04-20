@@ -31,16 +31,12 @@ class CampaignController extends AbstractController
     {
         $campaign = new Campaign();
         $form = $this->createForm(CampaignType::class, $campaign);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-
             $campaign->setId();
-
             $entityManager->persist($campaign); // prepare de PDO
             $entityManager->flush(); // execute de PDO
-
             return $this->redirectToRoute('app_campaign_show', ['id' => $campaign->getId()], Response::HTTP_SEE_OTHER);
         }
 
@@ -53,6 +49,7 @@ class CampaignController extends AbstractController
     #[Route('/{id}', name: 'app_campaign_show', methods: ['GET'])]
     public function show(Campaign $campaign): Response
     {
+
         return $this->render('campaign/show.html.twig', [
             'campaign' => $campaign,
         ]);
