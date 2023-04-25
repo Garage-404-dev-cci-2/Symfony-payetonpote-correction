@@ -27,29 +27,11 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/new/{id}', name: 'app_payment_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Campaign $campaign): Response
+    public function new(Campaign $campaign): Response
     {
 
-        $payment = new Payment();
-        $form = $this->createForm(PaymentType::class, $payment);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $payment->getParticipant()->setCampaign($campaign);
-
-            $entityManager->persist($payment->getParticipant());
-            $entityManager->persist($payment);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('campaign/show.html.twig', [
-                'campaign' => $campaign,
-            ], Response::HTTP_SEE_OTHER);
-        }
-
         return $this->render('payment/new.html.twig', [
-            'payment' => $payment,
-            'form' => $form,
-            'campaign' => $campaign
+            'campaign' => $campaign,
         ]);
     }
 }

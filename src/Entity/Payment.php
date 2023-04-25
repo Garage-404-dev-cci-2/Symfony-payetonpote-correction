@@ -44,6 +44,13 @@ class Payment
     private $updatedAt;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="token", type="string", nullable=true)
+     */
+    private $token;
+
+    /**
      * @var \Participant
      *
      * @ORM\ManyToOne(targetEntity="Participant")
@@ -66,6 +73,18 @@ class Payment
     public function setAmount(?int $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }
@@ -105,6 +124,4 @@ class Payment
 
         return $this;
     }
-
-
 }

@@ -4,6 +4,13 @@
 {% endblock %}
 
 {% block body %}
+
+	<style>
+		.checkbox {
+			opacity: 1 !important;
+		}
+	</style>
+
 	<div class="parallax-container valign-wrapper">
 		<div class="section no-pad-bot">
 			<div class="container">
@@ -17,24 +24,9 @@
 		<div class="parallax"><img src="/Symfony-Banger/public/assets/images/8.jpg" alt="Titre de la campagne"></div>
 	</div>
 
-	<div class="container">
-		<div class="section">
-			<div class="row">
-				<div class="col s12 center">
-					<h4>Participez en quelques secondes</h4>
-				</div>
-			</div>
-			<!--   Form Section   -->
-			<div class="card">
-				<div class="card-content">
-					<div class="row">
-						{{ include('payment/_form.html.twig') }}
 
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	{{ include('payment/_form.html.twig') }}
+
 
 	<div class="container">
 		<div class="section">
@@ -78,4 +70,6 @@
 
 		</div>
 	</div>
+
+
 {% endblock %}

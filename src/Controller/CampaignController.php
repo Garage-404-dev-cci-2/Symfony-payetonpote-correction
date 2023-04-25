@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Campaign;
+use App\Entity\Participant;
+use App\Entity\Payment;
 use App\Form\CampaignType;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,11 +48,26 @@ class CampaignController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_campaign_show', methods: ['GET'])]
-    public function show(Campaign $campaign): Response
+    public function show(Campaign $campaign, EntityManagerInterface $entityManager): Response
     {
 
+        $participants = $entityManager->getRepository(Participant::class)
+            ->findBy(['campaign' => $campaign->getId()]);
+
+        $payments = [];
+        $totalAmount = 0;
+
+        foreach ($participants as $participant) {
+            $payment = $entityManager->getRepository(Payment::class)->findBy(['participant' => $participant->getId()]);
+            array_push($payments, $payment[0]);
+
+            $totalAmount += $payment[0]->getAmount();
+        }
         return $this->render('campaign/show.html.twig', [
             'campaign' => $campaign,
+            'payments' => $payments,
+            'totalParticipants' => count($participants),
+            'totalAmount' => $totalAmount,
         ]);
     }
 
@@ -63,7 +79,6 @@ class CampaignController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
             return $this->redirectToRoute('app_campaign_index', [], Response::HTTP_SEE_OTHER);
         }
 

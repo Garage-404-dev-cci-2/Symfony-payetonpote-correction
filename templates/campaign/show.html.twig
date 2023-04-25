@@ -21,11 +21,33 @@
 	<!-- Show progress -->
 	<section class="progress-section">
 		<div class="progress">
-			<div class="determinate" style="width: 70%">
-				<span>70% de l'objectif</span>
+			<div class="determinate" style="width: {{ campaign.goal != 0? (totalAmount / campaign.goal) * 100 : 0 }}%">
+				<span>{{ ((totalAmount / campaign.goal)*100)|round(1)}}% de l'objectif</span>
 			</div>
 		</div>
 	</section>
+
+	<style>
+		.alert {
+			margin-bottom: 1rem;
+			padding: 1rem;
+			border: 1px solid transparent;
+			border-radius: 0.25rem;
+		}
+
+		.alert-success {
+			color: #155724;
+			background-color: #d4edda;
+			border-color: #c3e6cb;
+		}
+	</style>
+	{% if app.flashes('success') %}
+		<div class="alert alert-success">
+			{% for message in app.flashes('success') %}
+				{{ message }}
+			{% endfor %}
+		</div>
+	{% endif %}
 
 	<div class="container participe">
 		<div
@@ -55,7 +77,7 @@
 						<div class="btn-large btn-floating white">
 							<i class="material-icons teal-text">person</i>
 						</div>
-						<h3 class="center">12</h3>
+						<h3 class="center">{{totalParticipants}}</h3>
 						<p class="light">Participants</p>
 					</div>
 				</div>
@@ -65,7 +87,7 @@
 						<div class="btn-large btn-floating white">
 							<i class="material-icons teal-text">redeem</i>
 						</div>
-						<h3 class="center">220</h3>
+						<h3 class="center">{{totalAmount}}</h3>
 						<p class="light">euros récoltés</p>
 					</div>
 				</div>
@@ -104,18 +126,18 @@
 						</thead>
 
 						<tbody>
-							<tr>
-								<td>Alvin@live.net</td>
-								<td>5€</td>
-							</tr>
-							<tr>
-								<td>Alan@live.net</td>
-								<td>12€</td>
-							</tr>
-							<tr>
-								<td>Jonathan@live.net</td>
-								<td>7€</td>
-							</tr>
+							{% for payment in payments %}
+								<tr>
+									<td>
+										{% if payment.participant.hidden %}
+											anonyme
+										{% else %}
+											{{ payment.participant.email }}
+										{% endif %}
+									</td>
+									<td>{{payment.amount}}€</td>
+								</tr>
+							{% endfor %}
 						</tbody>
 					</table>
 				</div>

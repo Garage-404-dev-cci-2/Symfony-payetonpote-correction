@@ -36,6 +36,13 @@ class Participant
     private $email;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="hidden", type="boolean", nullable=false)
+     */
+    private $hidden = '0';
+
+    /**
      * @var \Campaign
      *
      * @ORM\ManyToOne(targetEntity="Campaign")
@@ -70,6 +77,18 @@ class Participant
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function isHidden(): ?bool
+    {
+        return $this->hidden;
+    }
+
+    public function setHidden(bool $hidden): self
+    {
+        $this->hidden = $hidden;
 
         return $this;
     }
