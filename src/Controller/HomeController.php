@@ -21,24 +21,9 @@ class HomeController extends AbstractController
             ->getRepository(Campaign::class)
             ->findAll();
 
-        
-
-
         return $this->render('home/index.html.twig', [
             'campaigns' => $campaigns,
         ]);
-    }
-
-    #[Route('/campaign_v1/create', name: 'create_campaign')]
-    public function createCampaign(): Response
-    {
-        return $this->render('campaign_v1/create.html.twig', []);
-    }
-
-    #[Route('/campaign_v1/show', name: 'show_campaign')]
-    public function showCampaign(): Response
-    {
-        return $this->render('campaign_v1/show.html.twig', []);
     }
 
     #[Route('/payment/create', name: 'create_payment')]
