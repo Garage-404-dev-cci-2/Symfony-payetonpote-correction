@@ -40,21 +40,33 @@ class StripeController extends AbstractController
         $entityManager->persist($payment);
         $entityManager->flush();
 
-        $amount = $payment->getAmount() * 100;
 
+        $amount = $payment->getAmount() * 100;
 
         try {
             Stripe\Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
+
             $token = $request->request->get('stripeToken');
+
             $stripeToken = Stripe\Token::retrieve($token);
+
             Stripe\Charge::create([
                 "amount" => $amount,
                 "currency" => "usd",
                 'description' => 'Example charge',
                 'source' => $stripeToken
             ]);
-        } catch (Stripe\Exception\InvalidRequestException $e) {
-            dd($e);
+        } catch (Stripe\Exception\InvalidRequestException $error) {
+            // Gestion des erreurs Stripe
+            $this->addFlash(
+                'error',
+                "erreur : ' . $error. '"
+            );
+
+            return $this->redirectToRoute('app_campaign_show', [
+                'id' => $campaign->getId(),
+                'error' => $error
+            ], Response::HTTP_SEE_OTHER);
         }
 
 
@@ -62,6 +74,7 @@ class StripeController extends AbstractController
             'success',
             'Payment Successful!'
         );
+
         return $this->redirectToRoute('app_campaign_show', [
             'id' => $campaign->getId(),
         ], Response::HTTP_SEE_OTHER);
