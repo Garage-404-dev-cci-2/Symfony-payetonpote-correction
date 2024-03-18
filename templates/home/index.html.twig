@@ -24,7 +24,7 @@
 								<input id="cag_name" type="text" class="validate">
 								<label for="cag_name">Nommez votre nouvelle campagne</label>
 							</div>
-							<a href="{{ path('create_campaign')}}" class="btn-large waves-effect waves-light pink lighten-1 col s12 l4">Valider</a>
+							<a href="{{ path('app_campaign_new')}}" class="btn-large waves-effect waves-light pink lighten-1 col s12 l4">Valider</a>
 						</div>
 					</div>
 				</div>
@@ -32,7 +32,7 @@
 
 			</div>
 		</div>
-		<div class="parallax"><img src="/Symfony-Banger/public/assets/images/11.jpg" alt="Anniversaire, pot de départ, crémaillère... N'avancez plus les frais !"></div>
+		<div class="parallax"><img src="{{ asset('assets/images/11.jpg') }}" alt="Anniversaire, pot de départ, crémaillère... N'avancez plus les frais !"></div>
 	</div>
 
 	<div class="container">
@@ -86,7 +86,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="parallax"><img src="/Symfony-Banger/public/assets/images/10.jpg" alt="Une campagne pensée pour vous"></div>
+		<div class="parallax"><img src="{{ asset('assets/images/10.jpg') }}" alt="Une campagne pensée pour vous"></div>
 	</div>
 
 	<div class="container">

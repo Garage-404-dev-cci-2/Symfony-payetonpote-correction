@@ -11,9 +11,9 @@
 		href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!--Import materialize.css-->
 		<link
-		type="text/css" rel="stylesheet" href="/Symfony-Banger/public/assets/css/materialize.min.css" media="screen,projection"/>
+		type="text/css" rel="stylesheet" href="{{ asset('assets/css/materialize.min.css') }}" media="screen,projection"/>
 		<!--Custom styles-->
-		<link type="text/css" rel="stylesheet" href="/Symfony-Banger/public/assets/css/styles.css" media="screen,projection"/> {% block style %}{% endblock %}
+		<link type="text/css" rel="stylesheet" href="{{ asset('assets/css/styles.css') }}" media="screen,projection"/> {% block style %}{% endblock %}
 
 
 		<title>Cagnot'potes</title>
@@ -75,9 +75,9 @@
 			</div>
 		</footer>
 		<!--JavaScript at end of body for optimized loading-->
-		<script type="text/javascript" src="/Symfony-Banger/public/assets/js/materialize.min.js"></script>
+		<script type="text/javascript" src="{{ asset('assets/js/materialize.min.js') }}"></script>
 		<!--Init & custom scripts-->
-		<script type="text/javascript" src="/Symfony-Banger/public/assets/js/scripts.js"></script>
+		<script type="text/javascript" src="{{ asset('assets/js/scripts.js') }}"></script>
 
 	</body>
 </html>
